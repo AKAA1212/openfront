@@ -390,20 +390,26 @@ export function startWorker() {
     });
   });
 
-  // The load balancer will handle routing to this server based on path
-  const PORT = config.workerPortByIndex(workerId);
+    // Render exige qu'on écoute sur le port défini dans process.env.PORT
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : config.workerPortByIndex(workerId);
+
   server.listen(PORT, () => {
-    log.info(`running on http://localhost:${PORT}`);
-    log.info(`Handling requests with path prefix /w${workerId}/`);
-    // Signal to the master process that this worker is ready
+    log.info(`✅ Serveur lancé sur http://localhost:${PORT}`);
+    
+    if (workerId !== undefined) {
+      log.info(`🧠 Gestion des requêtes avec le préfixe /w${workerId}/`);
+    }
+
+    // Signale que le worker est prêt
     if (process.send) {
       process.send({
         type: "WORKER_READY",
         workerId: workerId,
       });
-      log.info(`signaled ready state to master`);
+      log.info(`📢 Signal envoyé au master : worker prêt`);
     }
   });
+
 
   // Global error handler
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
