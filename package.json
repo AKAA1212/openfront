@@ -16,10 +16,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "husky"
-  }
-}
-
-
+  },
   "lint-staged": {
     "**/*": [
       "eslint --fix",
