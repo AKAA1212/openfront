@@ -4,6 +4,7 @@
     "build-map": "node --loader ts-node/esm --experimental-specifier-resolution=node src/scripts/generateTerrainMaps.ts",
     "build-dev": "webpack --config webpack.config.js --mode development",
     "build-prod": "webpack --config webpack.config.js --mode production",
+    "start": "node --loader ts-node/esm --experimental-specifier-resolution=node src/server/Server.ts",
     "start:client": "webpack serve --open --node-env development",
     "start:server": "node --loader ts-node/esm --experimental-specifier-resolution=node src/server/Server.ts",
     "start:server-dev": "cross-env GAME_ENV=dev node --loader ts-node/esm --experimental-specifier-resolution=node src/server/Server.ts",
@@ -15,7 +16,10 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "husky"
-  },
+  }
+}
+
+
   "lint-staged": {
     "**/*": [
       "eslint --fix",
